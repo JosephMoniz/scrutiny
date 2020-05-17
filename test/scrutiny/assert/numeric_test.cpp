@@ -11,10 +11,10 @@ IntAssertEqParams::IntAssertEqParams(
 
 std::vector<IntAssertEqParams> int_assert_eq_params() {
   return {
-    IntAssertEqParams(1, 1, {}),
-    IntAssertEqParams(2, 2, {}),
-    IntAssertEqParams(1, 2, "assert 1 == 2"),
-    IntAssertEqParams(2, 1, "assert 2 == 1"),
+    {1, 1, {}},
+    {2, 2, {}},
+    {1, 2, "assert 1 == 2"},
+    {2, 1, "assert 2 == 1"},
   };
 }
 

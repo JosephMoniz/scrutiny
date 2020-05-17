@@ -9,6 +9,7 @@
 #include "scrutiny/assert/str_test.h"
 #include "scrutiny/assert/vector_test.h"
 #include "scrutiny/runner/test_failure_test.h"
+#include "scrutiny/runner/test_name_factory_test.h"
 #include "scrutiny/runner/test_reporter_test.h"
 #include "scrutiny/runner/test_suite_test.h"
 #include "scrutiny/runner/test_test.h"
@@ -24,6 +25,7 @@ int main() {
     str_assert_eq_tests,
     vector_assert_eq_tests,
     test_failure_tests,
+    test_name_factory_tests,
     test_reporter_tests,
     test_suite_tests,
     test_tests

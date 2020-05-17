@@ -20,3 +20,10 @@ struct AssertEq<size_t> {
   static std::optional<std::string> eq(size_t left, size_t right);
 
 };
+
+template <>
+struct AssertEq<ssize_t> {
+
+  static std::optional<std::string> eq(ssize_t left, ssize_t right);
+
+};

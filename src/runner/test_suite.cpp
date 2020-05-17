@@ -1,22 +1,12 @@
 #include "scrutiny/runner/test_suite.h"
 
-#include <numeric>
+#include <functional>
 
-size_t _test_suite_get_file_offset(std::string_view file) {
-  const auto folder_offset = file.find_last_of('/');
-  if (folder_offset == std::string_view::npos) {
-    return 0;
-  }
-  const auto folder = file.substr(0, folder_offset);
-  const auto parent_offset = folder.find_last_of('/');
-  if (parent_offset == std::string_view::npos) {
-    return folder.length() + 1;
-  }
-  return parent_offset + 1;
-}
+#include "scrutiny/runner/test_name_factory.h"
 
 TestSuite::TestSuite(std::vector<Test>&& tests, TestReporter& reporter) :
   _tests(std::move(tests)),
+  _test_state(),
   _test_reporter(reporter) { }
 
 TestSuite TestSuite::create(
@@ -25,8 +15,8 @@ TestSuite TestSuite::create(
   TestReporter& reporter
 ) {
   std::vector<Test> tests;
-  auto file_offset = _test_suite_get_file_offset(file);
-  TestFactory test_factory(file_offset);
+  const auto test_name_factory = TestNameFactory::create(file);
+  TestFactory test_factory(test_name_factory);
   for (auto& test_generator : test_generators) {
     auto test_groups = test_generator(test_factory);
     for (const auto& test_group : test_groups) {
@@ -36,18 +26,31 @@ TestSuite TestSuite::create(
   return TestSuite(std::move(tests), reporter);
 }
 
+void TestSuite::_start() {
+  auto count_state_msg = TestStateMessage::count(_tests.size());
+  auto count_reporter_msg = _test_state.handle(count_state_msg);
+  _test_reporter.handle(count_reporter_msg);
+}
+
+void TestSuite::_step(const Test& test) {
+  auto failure = test();
+  auto state_msg = failure
+    ? TestStateMessage::failed(failure.value())
+    : TestStateMessage::passed(test.name());
+  auto reporter_msg = _test_state.handle(state_msg);
+  _test_reporter.handle(reporter_msg);
+}
+
+int TestSuite::_finish() {
+  auto final_state_msg = TestStateMessage::completed();
+  auto final_reporter_msg = _test_state.handle(final_state_msg);
+  _test_reporter.handle(final_reporter_msg);
+  return _test_state.failure_count() == 0;
+}
+
 int TestSuite::run() {
-  _test_reporter.handle(TestReporter::TestCount(_tests.size()));
-  for (const auto& test : _tests) {
-      auto failure = test();
-      if (failure) {
-        auto message = TestReporter::TestFailed(std::move(failure.value()));
-        _test_reporter.handle(std::move(message));
-      } else {
-        auto message = TestReporter::TestPassed(test.name());
-        _test_reporter.handle(message);
-      }
-  }
-  _test_reporter.handle(TestReporter::TestsCompleted());
-  return _test_reporter.failure_count() == 0;
+  _start();
+  const auto step = std::bind(&TestSuite::_step, this, std::placeholders::_1);
+  std::for_each(_tests.cbegin(), _tests.cend(), step);
+  return _finish();
 }

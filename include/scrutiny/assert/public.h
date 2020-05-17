@@ -5,5 +5,6 @@
 #include "scrutiny/assert/bool.h"
 #include "scrutiny/assert/numeric.h"
 #include "scrutiny/assert/optional.h"
+#include "scrutiny/assert/pointer.h"
 #include "scrutiny/assert/str.h"
 #include "scrutiny/assert/vector.h"

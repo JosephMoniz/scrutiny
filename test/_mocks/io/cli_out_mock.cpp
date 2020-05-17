@@ -1,5 +1,7 @@
 #include "_mocks/io/cli_out_mock.h"
 
+#include <algorithm>
+
 void CliOutMock::println(std::string_view out) {
   _println_calls.emplace_back(out);
 }

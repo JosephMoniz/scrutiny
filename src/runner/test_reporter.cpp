@@ -3,95 +3,64 @@
 #include <algorithm>
 #include <sstream>
 
-#include "scrutiny/runner/test_failure.h"
-
 TestReporter::TestReporter(CliOut& cli_out) :
-  _total_test_count(0),
-  _completed_test_count(0),
-  _passed_test_count(0),
-  _failed_test_count(0),
-  _failures(),
   _cli_out(cli_out) { }
 
-TestReporter::TestCount::TestCount(size_t count) :
-  _count(count) { }
-
-void TestReporter::TestCount::operator()(TestReporter& reporter) {
-  reporter._total_test_count = _count;
-  reporter._cli_out.println("== Running Tests");
+std::string TestReporter::_pad_progress(int progress) {
+  std::string result;
+  const auto progress_str = std::to_string(progress);
+  const auto padding_size = 3 - progress_str.length();
+  result.reserve(3);
+  result.insert(0, padding_size, ' ');
+  result.append(progress_str);
+  return result;
 }
 
-TestReporter::TestPassed::TestPassed(
-  std::string_view test_name
-) :
-  _test_name(test_name) { }
-
-void TestReporter::TestPassed::operator()(TestReporter& reporter) {
-  constexpr auto prefix = "\x1B[36m[";
-  constexpr auto outcome = "%]\x1B[0m \x1B[32mPASSED\x1B[0m ";
-  reporter._completed_test_count++;
-  reporter._passed_test_count++;
-  auto progress = reporter._get_pct_compete();
-  std::ostringstream oss;
-  oss << prefix << progress << outcome << _test_name;
-  reporter._cli_out.println(oss.str());
+void TestReporter::_visit_message(const TestReporterMessage::Count& message) {
+  _cli_out.println("== Running Tests");
 }
 
-TestReporter::TestFailed::TestFailed(TestFailure&& failure) :
-  _failure(std::move(failure)) { }
-
-void TestReporter::TestFailed::operator()(TestReporter& reporter) {
-  constexpr auto prefix = "\x1B[36m[";
-  constexpr auto outcome = "%]\x1B[0m \x1B[31mFAILED\x1B[0m ";
-  reporter._completed_test_count++;
-  reporter._failed_test_count++;
-  auto progress = reporter._get_pct_compete();
+void TestReporter::_visit_message(const TestReporterMessage::Passed& message) {
   std::ostringstream oss;
-  oss << prefix << progress << outcome << _failure.test_name();
-  reporter._failures.push_back(std::move(_failure));
-  reporter._cli_out.println(oss.str());
+  oss << "\x1B[36m["
+      << _pad_progress(message.progress)
+      << "%]\x1B[0m \x1B[32mPASSED\x1B[0m "
+      << message.test_name;
+  _cli_out.println(oss.str());
 }
 
-TestReporter::TestsCompleted::TestsCompleted() = default;
-
-void TestReporter::TestsCompleted::operator()(TestReporter& reporter) {
+void TestReporter::_visit_message(const TestReporterMessage::Failed& message) {
   std::ostringstream oss;
-  if (reporter._failed_test_count > 0) {
+  oss << "\x1B[36m["
+      << _pad_progress(message.progress)
+      << "%]\x1B[0m \x1B[31mFAILED\x1B[0m "
+      << message.failure.test_name();
+  _cli_out.println(oss.str());
+}
+
+void TestReporter::_visit_message(
+  const TestReporterMessage::Completed& message
+) {
+  std::ostringstream oss;
+  if (!message.failures.empty()) {
     oss << "\n== Tests Failures\n";
-    for (const auto& failure : reporter._failures) {
+    for (const auto& failure : message.failures) {
       oss << failure.to_string();
     }
   }
-  const auto ran = std::to_string(reporter._completed_test_count);
-  const auto failed = std::to_string(reporter._failed_test_count);
-  const auto passed = std::to_string(reporter._passed_test_count);
+  const auto ran = std::to_string(message.completed_test_count);
+  const auto failed = std::to_string(message.failed_test_count);
+  const auto passed = std::to_string(message.passed_test_count);
   oss << "\n== Summary\n"
       << "Tests ran: " << ran << "\n"
       << "Tests failed: " << failed << "\n"
       << "Tests passed: " << passed;
-  reporter._cli_out.println(oss.str());
+  _cli_out.println(oss.str());
 }
 
-
-size_t TestReporter::failure_count() const {
-  return _failed_test_count;
-}
-
-std::string TestReporter::_get_pct_compete() const {
-  float completed = _completed_test_count;
-  float total = _total_test_count;
-  auto pct = (int) ((completed / total) * 100);
-  auto string = std::to_string(pct);
-  auto signed_difference = (signed) (3 - string.size());
-  auto padding = (signed_difference > 0)
-    ? std::string((size_t) signed_difference, ' ')
-    : "";
-  return padding + string;
-}
-
-void TestReporter::handle(Message&& message) {
-  const auto visitor = [&](auto&& self) {
-    self(*this);
+void TestReporter::handle(const TestReporterMessage::Type& message) {
+  const auto visitor = [this](const auto& self) -> void {
+    _visit_message(self);
   };
-  std::visit(visitor, std::move(message));
+  std::visit(visitor, message);
 }

@@ -6,6 +6,7 @@
 #include "scrutiny/runner/test.h"
 #include "scrutiny/runner/test_factory.h"
 #include "scrutiny/runner/test_reporter.h"
+#include "scrutiny/runner/test_state.h"
 
 #define RUN_TESTS(GROUPS) do { \
   CliOutImpl __cli_out; \
@@ -17,7 +18,15 @@ class TestSuite final {
 
   std::vector<Test> _tests;
 
+  TestState _test_state;
+
   TestReporter& _test_reporter;
+
+  void _start();
+
+  void _step(const Test& test);
+
+  int _finish();
 
 public:
 

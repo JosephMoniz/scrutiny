@@ -13,10 +13,10 @@ BoolAssertEqParams::BoolAssertEqParams(
 
 std::vector<BoolAssertEqParams> bool_assert_eq_params() {
   return {
-    BoolAssertEqParams(true, true, {}),
-    BoolAssertEqParams(false, false, {}),
-    BoolAssertEqParams(true, false, "assert true == false"),
-    BoolAssertEqParams(false, true, "assert false == true"),
+    {true, true, {}},
+    {false, false, {}},
+    {true, false, "assert true == false"},
+    {false, true, "assert false == true"}
   };
 }
 

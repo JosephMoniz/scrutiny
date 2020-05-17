@@ -16,14 +16,14 @@ std::optional<AssertFailure> test_factory_make_params_test_mock(
   return AssertFailure("file", "func", 3, std::string(param));
 }
 
-std::optional<AssertFailure> test_factory_make_unary_test_test() {
+std::optional<AssertFailure> test_factory_unary_test() {
   // Given ...
   //
-  TestFactory factory(1);
+  TestFactory factory(TestNameFactory::create("/"));
 
   // When ...
   //
-  const auto result = factory.make_unary_test(
+  const auto result = factory.unary(
     "/file", "func", _test_factory_unary_test_mock
   );
 
@@ -37,14 +37,14 @@ std::optional<AssertFailure> test_factory_make_unary_test_test() {
   return {};
 }
 
-std::optional<AssertFailure> test_factory_make_parameterized_test_test() {
+std::optional<AssertFailure> test_factory_parameterized_test() {
   // Given ...
   //
-  TestFactory factory(1);
+  TestFactory factory(TestNameFactory::create("/"));
 
   // When ...
   //
-  const auto result = factory.make_parameterized_tests(
+  const auto result = factory.parameterized(
     "/file",
     "func",
     test_factory_make_params_params_mock,
@@ -67,7 +67,7 @@ std::optional<AssertFailure> test_factory_make_parameterized_test_test() {
 
 Test::Group test_factory_tests(const TestFactory& factory) {
   return {
-    TEST(factory, test_factory_make_unary_test_test),
-    TEST(factory, test_factory_make_parameterized_test_test)
+    TEST(factory, test_factory_unary_test),
+    TEST(factory, test_factory_parameterized_test)
   };
 }

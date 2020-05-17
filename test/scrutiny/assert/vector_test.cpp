@@ -11,18 +11,18 @@ VectorAssertEqParams::VectorAssertEqParams(
 
 std::vector<VectorAssertEqParams> vector_assert_eq_params() {
   return {
-    VectorAssertEqParams({1}, {1}, {}),
-    VectorAssertEqParams({2}, {2}, {}),
-    VectorAssertEqParams({1, 2}, {1, 2}, {}),
-    VectorAssertEqParams({}, {}, {}),
-    VectorAssertEqParams({1}, {2}, "assert {1} == {2}"),
-    VectorAssertEqParams({2}, {1}, "assert {2} == {1}"),
-    VectorAssertEqParams({1}, {}, "assert {1} == {}"),
-    VectorAssertEqParams({}, {1}, "assert {} == {1}"),
-    VectorAssertEqParams({1, 2}, {1}, "assert {1,2} == {1}"),
-    VectorAssertEqParams({1}, {1, 2}, "assert {1} == {1,2}"),
-    VectorAssertEqParams({1, 2}, {1, 3}, "assert {1,2} == {1,3}"),
-    VectorAssertEqParams({1, 3}, {1, 2}, "assert {1,3} == {1,2}"),
+    {{1}, {1}, {}},
+    {{2}, {2}, {}},
+    {{1, 2}, {1, 2}, {}},
+    {{}, {}, {}},
+    {{1}, {2}, "assert {1} == {2}"},
+    {{2}, {1}, "assert {2} == {1}"},
+    {{1}, {}, "assert {1} == {}"},
+    {{}, {1}, "assert {} == {1}"},
+    {{1, 2}, {1}, "assert {1,2} == {1}"},
+    {{1}, {1, 2}, "assert {1} == {1,2}"},
+    {{1, 2}, {1, 3}, "assert {1,2} == {1,3}"},
+    {{1, 3}, {1, 2}, "assert {1,3} == {1,2}"}
   };
 }
 

@@ -2,18 +2,17 @@
 
 #include <sstream>
 
-TestFactory::TestFactory(size_t file_offset) :
-  _file_offset(file_offset) { }
+TestFactory::TestFactory(TestNameFactory test_name_factory) :
+  _test_name_factory(test_name_factory) { }
 
 std::vector<Test>
-TestFactory::make_unary_test(
+TestFactory::unary(
   const char* file_name,
   const char* func_name,
-  std::optional<AssertFailure> (* test_func)()
+  std::optional<AssertFailure> (*test_func)()
 ) const {
   std::vector<Test> tests;
-  std::ostringstream oss;
-  oss << &file_name[_file_offset] << "::" << func_name;
-  tests.emplace_back(oss.str(), test_func);
+  auto name = _test_name_factory.unary(file_name, func_name);
+  tests.emplace_back(std::move(name), test_func);
   return tests;
 }

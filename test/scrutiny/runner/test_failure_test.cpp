@@ -12,36 +12,36 @@ TestFailureEqualsParams::TestFailureEqualsParams(
 
 std::vector<TestFailureEqualsParams> test_failure_equals_params() {
   return {
-    TestFailureEqualsParams(
+    {
       TestFailure("left", AssertFailure("file", "func", 3, "fail")),
       TestFailure("right", AssertFailure("file", "func", 3, "fail")),
       false
-    ),
-    TestFailureEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("different", "func", 3, "fail")),
       false
-    ),
-    TestFailureEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "different", 3, "fail")),
       false
-    ),
-    TestFailureEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 4, "fail")),
       false
-    ),
-    TestFailureEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 3, "different")),
       false
-    ),
-    TestFailureEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       true
-    )
+    }
   };
 }
 
@@ -75,36 +75,36 @@ TestFailureNotEqualsParams::TestFailureNotEqualsParams(
 
 std::vector<TestFailureNotEqualsParams> test_failure_not_equals_params() {
   return {
-    TestFailureNotEqualsParams(
+    {
       TestFailure("left", AssertFailure("file", "func", 3, "fail")),
       TestFailure("right", AssertFailure("file", "func", 3, "fail")),
       true
-    ),
-    TestFailureNotEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("different", "func", 3, "fail")),
       true
-    ),
-    TestFailureNotEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "different", 3, "fail")),
       true
-    ),
-    TestFailureNotEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 4, "fail")),
       true
-    ),
-    TestFailureNotEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 3, "different")),
       true
-    ),
-    TestFailureNotEqualsParams(
+    },
+    {
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       TestFailure("same", AssertFailure("file", "func", 3, "fail")),
       false
-    )
+    }
   };
 }
 

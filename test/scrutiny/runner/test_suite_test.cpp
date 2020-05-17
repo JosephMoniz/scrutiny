@@ -26,11 +26,11 @@ TestSuiteRunParams::TestSuiteRunParams(
 
 std::vector<TestSuiteRunParams> test_suite_run_params() {
   return {
-    TestSuiteRunParams(
+    {
       "main.cpp",
       [](const TestFactory& factory) -> Test::Group {
         return {
-          factory.make_unary_test(
+          factory.unary(
             "scrutiny/runner/test_suite_test.cpp",
             "_test_suite_pass_mock",
             _test_suite_pass_mock
@@ -38,7 +38,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         };
       },
       1,
-      std::vector<std::string_view> {
+      std::vector<std::string_view>{
         "== Running Tests",
         "\x1B[36m[100%]\x1B[0m \x1B[32mPASSED\x1B[0m "
         "scrutiny/runner/test_suite_test.cpp::_test_suite_pass_mock",
@@ -47,12 +47,12 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         "Tests failed: 0\n"
         "Tests passed: 1"
       }
-    ),
-    TestSuiteRunParams(
+    },
+    {
       "tests/main.cpp",
       [](const TestFactory& factory) -> Test::Group {
         return {
-          factory.make_unary_test(
+          factory.unary(
             "tests/scrutiny/runner/test_suite_test.cpp",
             "_test_suite_pass_mock",
             _test_suite_pass_mock
@@ -60,7 +60,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         };
       },
       1,
-      std::vector<std::string_view> {
+      std::vector<std::string_view>{
         "== Running Tests",
         "\x1B[36m[100%]\x1B[0m \x1B[32mPASSED\x1B[0m "
         "scrutiny/runner/test_suite_test.cpp::_test_suite_pass_mock",
@@ -69,12 +69,12 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         "Tests failed: 0\n"
         "Tests passed: 1"
       }
-    ),
-    TestSuiteRunParams(
+    },
+    {
       "/home/scrutiny/tests/main.cpp",
       [](const TestFactory& factory) -> Test::Group {
         return {
-          factory.make_unary_test(
+          factory.unary(
             "/home/scrutiny/tests/scrutiny/runner/test_suite_test.cpp",
             "_test_suite_pass_mock",
             _test_suite_pass_mock
@@ -82,7 +82,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         };
       },
       1,
-      std::vector<std::string_view> {
+      std::vector<std::string_view>{
         "== Running Tests",
         "\x1B[36m[100%]\x1B[0m \x1B[32mPASSED\x1B[0m "
         "tests/scrutiny/runner/test_suite_test.cpp::_test_suite_pass_mock",
@@ -91,12 +91,12 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         "Tests failed: 0\n"
         "Tests passed: 1"
       }
-    ),
-    TestSuiteRunParams(
+    },
+    {
       "/home/scrutiny/tests/main.cpp",
       [](const TestFactory& factory) -> Test::Group {
         return {
-          factory.make_unary_test(
+          factory.unary(
             "/home/scrutiny/tests/scrutiny/runner/test_suite_test.cpp",
             "_test_suite_fail_mock",
             _test_suite_fail_mock
@@ -104,7 +104,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         };
       },
       0,
-      std::vector<std::string_view> {
+      std::vector<std::string_view>{
         "== Running Tests",
         "\x1B[36m[100%]\x1B[0m \x1B[31mFAILED\x1B[0m "
         "tests/scrutiny/runner/test_suite_test.cpp::_test_suite_fail_mock",
@@ -118,17 +118,17 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         "Tests failed: 1\n"
         "Tests passed: 0"
       }
-    ),
-    TestSuiteRunParams(
+    },
+    {
       "/home/scrutiny/tests/main.cpp",
       [](const TestFactory& factory) -> Test::Group {
         return {
-          factory.make_unary_test(
+          factory.unary(
             "/home/scrutiny/tests/scrutiny/runner/test_suite_test.cpp",
             "_test_suite_pass_mock",
             _test_suite_pass_mock
           ),
-          factory.make_unary_test(
+          factory.unary(
             "/home/scrutiny/tests/scrutiny/runner/test_suite_test.cpp",
             "_test_suite_fail_mock",
             _test_suite_fail_mock
@@ -136,7 +136,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         };
       },
       0,
-      std::vector<std::string_view> {
+      std::vector<std::string_view>{
         "== Running Tests",
         "\x1B[36m[ 50%]\x1B[0m \x1B[32mPASSED\x1B[0m "
         "tests/scrutiny/runner/test_suite_test.cpp::_test_suite_pass_mock",
@@ -152,7 +152,7 @@ std::vector<TestSuiteRunParams> test_suite_run_params() {
         "Tests failed: 1\n"
         "Tests passed: 1"
       }
-    )
+    }
   };
 }
 

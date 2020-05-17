@@ -9,31 +9,31 @@ AssertFailureEqualsParams::AssertFailureEqualsParams(
 
 std::vector<AssertFailureEqualsParams> assert_failure_equals_params() {
   return {
-    AssertFailureEqualsParams(
+    {
       AssertFailure("test.h", "test", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       true
-    ),
-    AssertFailureEqualsParams(
+    },
+    {
       AssertFailure("idk", "test", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       false
-    ),
-    AssertFailureEqualsParams(
+    },
+    {
       AssertFailure("test.h", "idk", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       false
-    ),
-    AssertFailureEqualsParams(
+    },
+    {
       AssertFailure("test.h", "test", 3, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       false
-    ),
-    AssertFailureEqualsParams(
+    },
+    {
       AssertFailure("test.h", "test", 42, "idk"),
       AssertFailure("test.h", "test", 42, "failed"),
       false
-    )
+    }
   };
 }
 
@@ -65,31 +65,31 @@ AssertFailureNotEqualsParams::AssertFailureNotEqualsParams(
 
 std::vector<AssertFailureNotEqualsParams> assert_failure_not_equals_params() {
   return {
-    AssertFailureNotEqualsParams(
+    {
       AssertFailure("test.h", "test", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       false
-    ),
-    AssertFailureNotEqualsParams(
+    },
+    {
       AssertFailure("idk", "test", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       true
-    ),
-    AssertFailureNotEqualsParams(
+    },
+    {
       AssertFailure("test.h", "idk", 42, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       true
-    ),
-    AssertFailureNotEqualsParams(
+    },
+    {
       AssertFailure("test.h", "test", 3, "failed"),
       AssertFailure("test.h", "test", 42, "failed"),
       true
-    ),
-    AssertFailureNotEqualsParams(
+    },
+    {
       AssertFailure("test.h", "test", 42, "idk"),
       AssertFailure("test.h", "test", 42, "failed"),
       true
-    )
+    }
   };
 }
 

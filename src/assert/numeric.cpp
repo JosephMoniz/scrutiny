@@ -19,3 +19,12 @@ std::optional<std::string> AssertEq<size_t>::eq(size_t left, size_t right) {
   }
   return {};
 }
+
+std::optional<std::string> AssertEq<ssize_t>::eq(ssize_t left, ssize_t right) {
+  if (left != right) {
+    std::ostringstream oss;
+    oss << "assert " << left << " == " << right;
+    return oss.str();
+  }
+  return {};
+}

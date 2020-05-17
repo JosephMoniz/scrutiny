@@ -11,10 +11,10 @@ StringViewAssertEqParams::StringViewAssertEqParams(
 
 std::vector<StringViewAssertEqParams> string_view_assert_eq_params() {
   return {
-    StringViewAssertEqParams("a", "a", {}),
-    StringViewAssertEqParams("b", "b", {}),
-    StringViewAssertEqParams("a", "b", "assert a == b"),
-    StringViewAssertEqParams("b", "a", "assert b == a"),
+    {"a", "a", {}},
+    {"b", "b", {}},
+    {"a", "b", "assert a == b"},
+    {"b", "a", "assert b == a"}
   };
 }
 
@@ -49,10 +49,10 @@ StringAssertEqParams::StringAssertEqParams(
 
 std::vector<StringAssertEqParams> string_assert_eq_params() {
   return {
-    StringAssertEqParams("a", "a", {}),
-    StringAssertEqParams("b", "b", {}),
-    StringAssertEqParams("a", "b", "assert a == b"),
-    StringAssertEqParams("b", "a", "assert b == a"),
+    {"a", "a", {}},
+    {"b", "b", {}},
+    {"a", "b", "assert a == b"},
+    {"b", "a", "assert b == a"}
   };
 }
 
@@ -86,10 +86,10 @@ CStringAssertEqParams::CStringAssertEqParams(
 
 std::vector<CStringAssertEqParams> c_string_assert_eq_params() {
   return {
-    CStringAssertEqParams("a", "a", {}),
-    CStringAssertEqParams("b", "b", {}),
-    CStringAssertEqParams("a", "b", "assert a == b"),
-    CStringAssertEqParams("b", "a", "assert b == a"),
+    {"a", "a", {}},
+    {"b", "b", {}},
+    {"a", "b", "assert a == b"},
+    {"b", "a", "assert b == a"}
   };
 }
 

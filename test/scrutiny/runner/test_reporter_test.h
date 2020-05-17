@@ -7,12 +7,10 @@
 #include "scrutiny.h"
 
 struct TestReporterHandleParams {
-  std::vector<TestReporter::Message> messages;
-  size_t expected_failure_count;
+  std::vector<TestReporterMessage::Type> messages;
   std::vector<std::string_view> expected_output;
   TestReporterHandleParams(
-    std::vector<TestReporter::Message>&& _messages,
-    size_t _expected_failure_count,
+    std::vector<TestReporterMessage::Type>&& _messages,
     std::vector<std::string_view>&& _expected_output
   );
 };

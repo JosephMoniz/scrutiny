@@ -1,7 +1,11 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(scrutiny)
 
 set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 
 set(INCLUDE_FILES
         include/scrutiny.h
@@ -21,7 +25,7 @@ set(INCLUDE_FILES
         include/scrutiny/assert/str.h
         include/scrutiny/assert/numeric.h
         include/scrutiny/assert/vector.h
-        include/scrutiny/assert/optional.h)
+        include/scrutiny/assert/optional.h include/scrutiny/runner/test_name_factory.h include/scrutiny/runner/test_reporter_message.h include/scrutiny/runner/test_state.h include/scrutiny/runner/test_state_message.h include/scrutiny/assert/pointer.h)
 
 set(SOURCE_FILES
         src/runner/test.cpp
@@ -33,7 +37,7 @@ set(SOURCE_FILES
         src/runner/test_factory.cpp
         src/assert/bool.cpp
         src/assert/numeric.cpp
-        src/assert/str.cpp)
+        src/assert/str.cpp src/runner/test_name_factory.cpp src/runner/test_reporter_message.cpp src/runner/test_state_message.cpp src/runner/test_state.cpp src/assert/pointer.cpp)
 
 set(TEST_FILES
         test/scrutiny/assert/assert_failure_test.cpp
@@ -63,7 +67,7 @@ set(TEST_FILES
         test/scrutiny/assert/str_test.cpp
         test/scrutiny/assert/str_test.h
         test/scrutiny/assert/vector_test.cpp
-        test/scrutiny/assert/vector_test.h)
+        test/scrutiny/assert/vector_test.h test/scrutiny/runner/test_name_factory_test.cpp test/scrutiny/runner/test_name_factory_test.h)
 
 set(STATIC_DEPENDENCIES)
 

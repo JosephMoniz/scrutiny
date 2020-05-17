@@ -10,10 +10,10 @@
 #include "scrutiny/runner/test_reporter.h"
 
 #define TEST(FACTORY, TEST) \
-  FACTORY.make_unary_test(__FILE__, #TEST, TEST)
+  FACTORY.unary(__FILE__, #TEST, TEST)
 
 #define PARAMETERIZED_TEST(FACTORY, PARAMS, TEST) \
-  FACTORY.make_parameterized_tests(__FILE__, #TEST, PARAMS, TEST)
+  FACTORY.parameterized(__FILE__, #TEST, PARAMS, TEST)
 
 
 class Test final {
@@ -27,6 +27,8 @@ class Test final {
 public:
 
   using Group = std::vector<std::vector<Test>>;
+
+  using Result = std::optional<AssertFailure>;
 
   Test(std::string&& test_name, Func&& test_func);
 

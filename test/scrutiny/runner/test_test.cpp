@@ -34,14 +34,14 @@ TestRunParams::TestRunParams(
 
 std::vector<TestRunParams> test_run_params() {
   return {
-    TestRunParams(
+    {
       Test("pass", _test_pass_mock),
       {}
-    ),
-    TestRunParams(
+    },
+    {
       Test("fail", _test_fail_mock),
       TestFailure("fail", AssertFailure("file", "func", 3, "fail"))
-    ),
+    }
   };
 }
 

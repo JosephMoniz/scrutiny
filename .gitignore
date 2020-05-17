@@ -6,3 +6,4 @@ CMakeCache.txt
 libscrutiny.a
 Makefile
 scrutiny_tests
+*.cbp
