@@ -59,13 +59,13 @@ OptionalAssertEqParams::OptionalAssertEqParams(
 
 std::vector<OptionalAssertEqParams> optional_assert_eq_params() {
   return {
-    OptionalAssertEqParams(1, 1, {}),
-    OptionalAssertEqParams(2, 2, {}),
-    OptionalAssertEqParams({}, {}, {}),
-    OptionalAssertEqParams(1, 2, "assert {1} == {2}"),
-    OptionalAssertEqParams(2, 1, "assert {2} == {1}"),
-    OptionalAssertEqParams(1, {}, "assert {1} == {}"),
-    OptionalAssertEqParams({}, 1, "assert {} == {1}"),
+    {1, 1, {}},
+    {2, 2, {}},
+    {{}, {}, {}},
+    {1, 2, "assert {1} == {2}"},
+    {2, 1, "assert {2} == {1}"},
+    {1, {}, "assert {1} == {}"},
+    {}{}, 1, "assert {} == {1}"},
   };
 }
 
